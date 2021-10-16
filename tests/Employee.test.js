@@ -87,13 +87,14 @@ describe("Employee class", () => {
 
             // Assert
             expect(role).toEqual(Employee);
+        };
+
+        it("should return 'role' when created", () => {
+            // Act
+            const obj = new Employee();
+            // Assert
+            expect(role).toEqual("Employee");
         });
 
-    it("should return 'role' when created", () => {
-        // Act
-        const obj = new Employee();
-        // Assert
-        expect(role).toEqual("Employee");
-    });
-
+    })
 });
