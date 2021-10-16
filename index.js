@@ -1,7 +1,7 @@
 const inquirer = require('inquirer');
 const path = require('path');
 const fs = require('fs');
-const generateMarkdown = require('./utils/generateMarkdown');
+const generateFile = require('./utils/generateFile');
 
 // obtain user input
 const teamInput = [
