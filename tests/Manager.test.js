@@ -2,6 +2,7 @@ const Employee = require("../Employee");
 const Manager = require("../Manager");
 
 describe("Manager class", () => {
+    //do I need to add employee tests again here?
     describe("getOfficeNumber method", () => {
         it("should return an object containing an 'officeNumber' property when called with the 'new' keyword", () => {
             // Act

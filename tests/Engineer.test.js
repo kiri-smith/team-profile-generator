@@ -2,6 +2,7 @@ const Employee = require("../Employee");
 const Engineer = require("../Engineer");
 
 describe("Engineer class", () => {
+    //do I need to add employee tests again here?
     describe("getGithub method", () => {
         it("should return an object containing a 'username' property when called with the 'new' keyword", () => {
             // Act
