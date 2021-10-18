@@ -16,12 +16,11 @@ function generateFile(data) {
         <h1>My Team</h1>
     </header>
     
+    ${generateManager(data)};
+    ${generateEngineer(data)};
+    ${generateIntern(data)};
+
     `;
-
-    return generateManager(data);
-    return generateEngineer(data);
-    return generateIntern(data);
-
 }
 
 module.exports = generateFile;
