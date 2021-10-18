@@ -124,24 +124,8 @@ function newEmployee() {
                 return new Manager();
             }
         })
+
 };
-
-/*function newEngineer() {
-    inquirer
-        .prompt(engineerQuestions)
-        .then((responses) => {
-            return new Engineer();
-        })
-};
-
-function newIntern() {
-    inquirer.prompt(internQuestions)
-        .then((responses) => {
-            return new Intern();
-        })
-};*/
-
-const newTeam = [];
 
 //ASK ARM:
 //general flow employee-manager-intern-engineer??
@@ -159,13 +143,34 @@ function writeToFile(fileName, data) {
 
 // Create a function to initialize app
 function init() {
-    newTeam.push(newEmployee /* how do I put them all here? */) => {
+    newEmployee().then((responses) => {
         writeToFile('NewIndex.html', generateFile({ ...responses }))
-    }
+    })
 }
 
 //Call it to initialize app
 init();
 
 
+/*function init() {
+    newTeam.push(newEmployee -- how do I put them all here? ).then((newTeam) => {
+        writeToFile('NewIndex.html', generateFile({ ...responses }))
+    }
+}
 
+const newTeam = []; */
+
+/*function newEngineer() {
+    inquirer
+        .prompt(engineerQuestions)
+        .then((responses) => {
+            return new Engineer();
+        })
+};
+
+function newIntern() {
+    inquirer.prompt(internQuestions)
+        .then((responses) => {
+            return new Intern();
+        })
+};*/
