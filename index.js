@@ -112,20 +112,26 @@ function newEmployee() {
     inquirer.prompt(managerQuestions)
         .then((responses) => {
 
-            if (role === 'Engineer') {
-                inquirer.prompt(engineerQuestions);
-                return new Engineer;
-            } else if (role === 'Intern') {
-                inquirer.prompt(internQuestions);
-                return new Intern;
+            if (responses.role === 'Engineer') {
+                inquirer.prompt(engineerQuestions)
+                    .then((responses) => {
+                        newTeam.push(new Engineer(responses.name, responses.id, responses.email, responses.username))
+                    });
+            } else if (responses.role === 'Intern') {
+                inquirer.prompt(internQuestions)
+                    .then((responses) => {
+                        newTeam.push(new Intern(responses.name, responses.id, responses.email, responses.school))
+                    });
             } else {
-                return new Manager;
+                newTeam.push(new Manager(responses.name, responses.id, responses.email, responses.office))
 
             }
         });
 };
 
 newEmployee();
+
+const newTeam = [];
 //ASK ARM:
 //newEmployee function does not go through all prompts
 //init function:  does this look okay?
@@ -158,7 +164,7 @@ function init() {
     }
 }
 
-const newTeam = []; */
+*/
 
 /*function newEngineer() {
     inquirer
