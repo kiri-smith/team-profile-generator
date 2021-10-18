@@ -2,6 +2,11 @@ const inquirer = require('inquirer');
 const path = require('path');
 const fs = require('fs');
 const generateFile = require('./utils/generateFile');
+const Employee = require('./lib/Employee');
+const Engineer = require('./lib/Engineer');
+const Intern = require('./lib/Intern');
+const Manager = require('./lib/Manager');
+
 
 // obtain user input
 
@@ -108,39 +113,45 @@ const internQuestions = [
     },
 ];
 
-function newEmployee() {
+const newTeam = [];
+
+function addTeam() {
     inquirer.prompt(managerQuestions)
         .then((responses) => {
-
+            //console.log(responses);
+            newTeam.push(responses);
             if (responses.role === 'Engineer') {
-                inquirer.prompt(engineerQuestions)
+                return inquirer.prompt(engineerQuestions)
                     .then((responses) => {
-                        let Engineer = (responses.engineerName, responses.engineerIdNumber, responses.engineerEmail, responses.username);
-                        newTeam.push(Engineer);
-                        //return new Engineer;
-                        //newTeam.push(new Engineer(responses.engineerName, responses.engineerIdNumber, responses.engineerEmail, responses.username));
+                        newTeam.push(responses);
                     });
+                /*.then((responses) => {
+                    let employee = new Engineer(responses.engineerName, responses.engineerIdNumber, responses.engineerEmail, responses.username);
+                    newTeam.push(employee);
+                    //init();
+                });*/
             } else if (responses.role === 'Intern') {
-                inquirer.prompt(internQuestions)
+                return inquirer.prompt(internQuestions)
                     .then((responses) => {
-                        let Intern = (responses.internName, responses.internIdNumber, responses.internEmail, responses.school)
-                        newTeam.push(Intern);
-                        //return new Intern;
-                        // newTeam.push(new Intern(responses.internName, responses.internIdNumber, responses.internEmail, responses.school));
+                        newTeam.push(responses);
                     });
+                /*.then((responses) => {
+                    let employee = new Intern(responses.internName, responses.internIdNumber, responses.internEmail, responses.school);
+                    newTeam.push(employee);
+                    //init();
+                });*/
             } else {
-                //return new Manager;
-                let Manager = (responses.managerName, responses.managerIdNumber, responses.managerEmail, responses.office);
-                newTeam.push(Manager);
-                //newTeam.push(new Manager(responses.managerName, responses.managerIdNumber, responses.managerEmail, responses.office));
-
+                console.log("Thanks for your input!")
+                return init();
+                /*let employee = new Manager(responses.managerName, responses.managerIdNumber, responses.managerEmail, responses.office);
+                newTeam.push(employee);*/
+                // init();
             }
-
-        });
+        })
 };
 
 
-const newTeam = [];
+
 
 //ASK ARM:
 //newEmployee function does not go through all prompts
@@ -158,24 +169,24 @@ function writeToFile(fileName, data) {
 }
 
 // Create a function to initialize app
-/*function init() {
-    newEmployee((responses) => {
+function init() {
+    addTeam((responses) => {
         writeToFile('NewIndex.html', generateFile({ ...responses }))
     })
-}
+};
 
-function init() {
+/*function init() {
     newEmployee((responses) => {
         writeToFile('NewIndex.html', generateFile({ newTeam }))
     })
 }*/
 
-function init() {
+/*function init() {
     newEmployee((responses) => {
-        writeToFile('NewIndex.html', generateFile({ ...responses }))
+        writeToFile('NewIndex.html', generateFile(newTeam))
     }
     )
-};
+};*/
 
 //Call it to initialize app
 init();
