@@ -9,7 +9,15 @@ const Manager = require('./lib/Manager');
 
 
 // obtain user input
-
+const newEmployee = [
+    {
+        type: 'list',
+        message: "Do you want to add an employee?",
+        name: 'addEmployee',
+        choices: ['yes', 'no'],
+        validate: (value) => { if (value) { return true } else { return 'Must choose a value to continue.' } }
+    },
+]
 
 const managerQuestions = [
 
@@ -116,50 +124,49 @@ const internQuestions = [
 const newTeam = [];
 
 function addTeam() {
-    inquirer.prompt(managerQuestions)
+    inquirer.prompt(newEmployee)
         .then((responses) => {
-            //console.log(responses);
-            newTeam.push(responses);
-            if (responses.role === 'Engineer') {
-                return inquirer.prompt(engineerQuestions)
+            if (responses.addEmployee === 'yes') {
+                inquirer.prompt(managerQuestions)
                     .then((responses) => {
+                        //console.log(responses);
                         newTeam.push(responses);
+                        if (responses.role === 'Engineer') {
+                            return inquirer.prompt(engineerQuestions)
+                                .then((responses) => {
+                                    newTeam.push(responses);
+                                    return addTeam();
+                                });
+                            /*.then((responses) => {
+                                let employee = new Engineer(responses.engineerName, responses.engineerIdNumber, responses.engineerEmail, responses.username);
+                                newTeam.push(employee);
+                                //init();
+                            });*/
+                        } else if (responses.role === 'Intern') {
+                            return inquirer.prompt(internQuestions)
+                                .then((responses) => {
+                                    newTeam.push(responses);
+                                    return addTeam();
+                                });
+                            /*.then((responses) => {
+                                let employee = new Intern(responses.internName, responses.internIdNumber, responses.internEmail, responses.school);
+                                newTeam.push(employee);
+                                //init();
+                            });*/
+                        } else {
+                            console.log("Thanks for your input!")
+                            return addTeam();
+                            /*let employee = new Manager(responses.managerName, responses.managerIdNumber, responses.managerEmail, responses.office);
+                            newTeam.push(employee);*/
+                            // init();
+                        }
                     });
-                /*.then((responses) => {
-                    let employee = new Engineer(responses.engineerName, responses.engineerIdNumber, responses.engineerEmail, responses.username);
-                    newTeam.push(employee);
-                    //init();
-                });*/
-            } else if (responses.role === 'Intern') {
-                return inquirer.prompt(internQuestions)
-                    .then((responses) => {
-                        newTeam.push(responses);
-                    });
-                /*.then((responses) => {
-                    let employee = new Intern(responses.internName, responses.internIdNumber, responses.internEmail, responses.school);
-                    newTeam.push(employee);
-                    //init();
-                });*/
             } else {
-                console.log("Thanks for your input!")
-                return init();
-                /*let employee = new Manager(responses.managerName, responses.managerIdNumber, responses.managerEmail, responses.office);
-                newTeam.push(employee);*/
-                // init();
-            }
-        })
+                return;
+            };
+        });
+    init();
 };
-
-
-
-
-//ASK ARM:
-//newEmployee function does not go through all prompts
-//init function:  does this look okay?
-//adding it to specific components on html page -- check
-
-//repeat the questions for more employees??
-//exit when "finish..." selected??
 
 
 
@@ -189,7 +196,7 @@ function init() {
 };*/
 
 //Call it to initialize app
-init();
+//init();
 
 
 /*function init() {
