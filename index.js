@@ -38,7 +38,7 @@ const managerQuestions = [
     {
 
         type: 'list',
-        name: 'addEmployee',
+        name: 'role',
         message: "Select the employee type you would like to add or select 'Finish Building My Team' to exit.",
         choices: ['Engineer', 'Intern', 'Finish Building My Team'],
         validate: (value) => { if (value) { return true } else { return 'Must choose a value to continue.' } }
@@ -107,14 +107,26 @@ const internQuestions = [
     },
 ];
 
-function newManager() {
+function newEmployee() {
     inquirer.prompt(managerQuestions)
         .then((responses) => {
-            return new Manager();
+            if (role === "Engineer") {
+                return inquirer.prompt(engineerQuestions)
+                    .then((responses) => {
+                        return new Engineer();
+                    });
+            } else if (role === "Intern") {
+                return inquirer.prompt(internQuestions)
+                    .then((responses) => {
+                        return new Intern();
+                    });
+            } else {
+                return new Manager();
+            }
         })
 };
 
-function newEngineer() {
+/*function newEngineer() {
     inquirer
         .prompt(engineerQuestions)
         .then((responses) => {
@@ -127,7 +139,7 @@ function newIntern() {
         .then((responses) => {
             return new Intern();
         })
-};
+};*/
 
 const newTeam = [];
 
@@ -147,9 +159,9 @@ function writeToFile(fileName, data) {
 
 // Create a function to initialize app
 function init() {
-    newTeam.push(newManager /* how do I put them all here? */) => {
+    newTeam.push(newEmployee /* how do I put them all here? */) => {
         writeToFile('NewIndex.html', generateFile({ ...responses }))
-    })
+    }
 }
 
 //Call it to initialize app
