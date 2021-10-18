@@ -5,6 +5,7 @@ const generateFile = require('./utils/generateFile');
 
 // obtain user input
 
+
 const managerQuestions = [
 
     {
@@ -110,31 +111,30 @@ const internQuestions = [
 function newEmployee() {
     inquirer.prompt(managerQuestions)
         .then((responses) => {
-            if (role === "Engineer") {
-                return inquirer.prompt(engineerQuestions)
-                    .then((responses) => {
-                        return new Engineer();
-                    });
-            } else if (role === "Intern") {
-                return inquirer.prompt(internQuestions)
-                    .then((responses) => {
-                        return new Intern();
-                    });
-            } else {
-                return new Manager();
-            }
-        })
 
+            if (role === 'Engineer') {
+                inquirer.prompt(engineerQuestions);
+                return new Engineer;
+            } else if (role === 'Intern') {
+                inquirer.prompt(internQuestions);
+                return new Intern;
+            } else {
+                return new Manager;
+
+            }
+        });
 };
 
+newEmployee();
 //ASK ARM:
-//general flow employee-manager-intern-engineer??
-//push to empty array
-//repeat the questions for more employees
-//exit when "finish..." selected
-//init function
-//connecting everything together
-//adding it to specific components on html page
+//newEmployee function does not go through all prompts
+//init function:  does this look okay?
+//adding it to specific components on html page -- check
+
+//repeat the questions for more employees??
+//exit when "finish..." selected??
+
+
 
 // Create a function to write HTML file
 function writeToFile(fileName, data) {
@@ -143,13 +143,13 @@ function writeToFile(fileName, data) {
 
 // Create a function to initialize app
 function init() {
-    newEmployee().then((responses) => {
+    newEmployee((responses) => {
         writeToFile('NewIndex.html', generateFile({ ...responses }))
     })
 }
 
 //Call it to initialize app
-init();
+//init();
 
 
 /*function init() {
