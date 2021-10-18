@@ -16,14 +16,14 @@ describe("Employee class", () => {
             // Act
             const obj = new Employee(name);
             // Assert
-            expect(obj.name).toEqual("Jill");
+            expect(obj.name).toBe("Jill");
         });
 
         it("should default 'name' to ''", () => {
             // Act
             const obj = new Employee();
             // Assert
-            expect(obj.name).toEqual('');
+            expect(obj.name).toBe('');
         });
     });
 
@@ -42,14 +42,14 @@ describe("Employee class", () => {
             // Act
             const obj = new Employee(id);
             // Assert
-            expect(obj.id).toEqual("123456");
+            expect(obj.id).toBe("123456");
         });
 
         it("should default 'ID' to ''", () => {
             // Act
             const obj = new Employee();
             // Assert
-            expect(obj.id).toEqual('');
+            expect(obj.id).toBe('');
         });
     });
 
@@ -68,33 +68,25 @@ describe("Employee class", () => {
             // Act
             const obj = new Employee(email);
             // Assert
-            expect(obj.email).toEqual("jtf003@gmail.com");
+            expect(obj.email).toBe("jtf003@gmail.com");
         });
 
         it("should default 'email' to ''", () => {
             // Act
             const obj = new Employee();
             // Assert
-            expect(obj.email).toEqual('');
+            expect(obj.email).toBe('');
         });
     });
 
-    //how do I write this one?
     describe("getRole method", () => {
-        it("should return the object name when called"), () => {
+        it("should return the string 'Employee'"), () => {
             // Act
             const obj = new Employee();
 
             // Assert
-            expect(role).toEqual(Employee);
+            expect(obj.getRole()).toBe("Employee");
         };
-
-        it("should return 'role' when created", () => {
-            // Act
-            const obj = new Employee();
-            // Assert
-            expect(role).toEqual("Employee");
-        });
 
     })
 });

@@ -2,7 +2,20 @@ const Employee = require("../Employee");
 const Engineer = require("../Engineer");
 
 describe("Engineer class", () => {
-    //do I need to add employee tests again here?
+    it("should create a new 'Engineer' object that has all of the elements of an 'Employee' object", () => {
+        const obj = new Engineer(name, id, email);
+        const name = "Kermit";
+        const id = "345678";
+        const email = "greenfrog@gmail.com";
+
+        expect(obj.name).toBe(name);
+        expect(obj.id).toBe(id);
+        expect(obj.email).toBe(email);
+        expect(obj.getName()).toBe(name);
+        expect(obj.getId()).toBe(id);
+        expect(obj.getEmail()).toBe(email);
+    });
+
     describe("getGithub method", () => {
         it("should return an object containing a 'username' property when called with the 'new' keyword", () => {
             // Act
@@ -18,34 +31,26 @@ describe("Engineer class", () => {
             // Act
             const obj = new Engineer(username);
             // Assert
-            expect(obj.username).toEqual("drmeanzo");
+            expect(obj.username).toBe("drmeanzo");
         });
 
         it("should default 'username' to ''", () => {
             // Act
             const obj = new Engineer();
             // Assert
-            expect(obj.username).toEqual('');
+            expect(obj.username).toBe('');
         });
     });
 
 
-    //how do I write this one?
     describe("getRole method", () => {
-        it("should return the object name when called"), () => {
+        it("should return the string 'Engineer'"), () => {
             // Act
-            const obj = new Engineer();
+            const obj = new Employee();
 
             // Assert
-            expect(role).toEqual(Engineer);
+            expect(obj.getRole()).toBe("Engineer");
         };
-
-        it("should return 'role' when created", () => {
-            // Act
-            const obj = new Engineer();
-            // Assert
-            expect(role).toEqual("Engineer");
-        });
 
     })
 });

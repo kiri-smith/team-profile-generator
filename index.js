@@ -4,7 +4,10 @@ const fs = require('fs');
 const generateFile = require('./utils/generateFile');
 
 // obtain user input
-const teamInput = [
+
+const newTeam = [];
+
+const teamQuestions = [
 
     {
         type: 'input',
