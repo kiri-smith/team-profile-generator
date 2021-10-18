@@ -11,21 +11,21 @@ const managerQuestions = [
     {
         type: 'input',
         message: "What is your team manager's name?",
-        name: 'name',
+        name: 'managerName',
         validate: (value) => { if (value) { return true } else { return 'Must input a name to continue.' } }
     },
 
     {
         type: 'input',
         message: "What is your team manager's employee ID number?",
-        name: 'idnumber',
+        name: 'managerIdNumber',
         validate: (value) => { if (value) { return true } else { return 'Must input an ID to continue.' } }
     },
 
     {
         type: 'input',
         message: "What is your team manager's email address?",
-        name: 'email',
+        name: 'managerEmail',
         validate: (value) => { if (value) { return true } else { return 'Must input an email address to continue.' } }
     },
 
@@ -39,8 +39,8 @@ const managerQuestions = [
     {
 
         type: 'list',
-        name: 'role',
         message: "Select the employee type you would like to add or select 'Finish Building My Team' to exit.",
+        name: 'role',
         choices: ['Engineer', 'Intern', 'Finish Building My Team'],
         validate: (value) => { if (value) { return true } else { return 'Must choose a value to continue.' } }
     },
@@ -51,21 +51,21 @@ const engineerQuestions = [
     {
         type: 'input',
         message: "What is the engineer's name?",
-        name: 'name',
+        name: 'engineerName',
         validate: (value) => { if (value) { return true } else { return 'Must input a name to continue.' } }
     },
 
     {
         type: 'input',
         message: "What is the engineer's employee ID number?",
-        name: 'idnumber',
+        name: 'engineerIdNumber',
         validate: (value) => { if (value) { return true } else { return 'Must input an ID to continue.' } }
     },
 
     {
         type: 'input',
         message: "What is the engineer's email address?",
-        name: 'email',
+        name: 'engineerEmail',
         validate: (value) => { if (value) { return true } else { return 'Must input an email address to continue.' } }
     },
 
@@ -82,21 +82,21 @@ const internQuestions = [
     {
         type: 'input',
         message: "What is the intern's name?",
-        name: 'name',
+        name: 'internName',
         validate: (value) => { if (value) { return true } else { return 'Must input a name to continue.' } }
     },
 
     {
         type: 'input',
         message: "What is the intern's employee ID number?",
-        name: 'idnumber',
+        name: 'internIdNumber',
         validate: (value) => { if (value) { return true } else { return 'Must input an ID to continue.' } }
     },
 
     {
         type: 'input',
         message: "What is the intern's email address?",
-        name: 'email',
+        name: 'internEmail',
         validate: (value) => { if (value) { return true } else { return 'Must input an email address to continue.' } }
     },
 
@@ -115,23 +115,33 @@ function newEmployee() {
             if (responses.role === 'Engineer') {
                 inquirer.prompt(engineerQuestions)
                     .then((responses) => {
-                        newTeam.push(new Engineer(responses.name, responses.id, responses.email, responses.username))
+                        let Engineer = (responses.engineerName, responses.engineerIdNumber, responses.engineerEmail, responses.username);
+                        newTeam.push(Engineer);
+                        //return new Engineer;
+                        //newTeam.push(new Engineer(responses.engineerName, responses.engineerIdNumber, responses.engineerEmail, responses.username));
                     });
             } else if (responses.role === 'Intern') {
                 inquirer.prompt(internQuestions)
                     .then((responses) => {
-                        newTeam.push(new Intern(responses.name, responses.id, responses.email, responses.school))
+                        let Intern = (responses.internName, responses.internIdNumber, responses.internEmail, responses.school)
+                        newTeam.push(Intern);
+                        //return new Intern;
+                        // newTeam.push(new Intern(responses.internName, responses.internIdNumber, responses.internEmail, responses.school));
                     });
             } else {
-                newTeam.push(new Manager(responses.name, responses.id, responses.email, responses.office))
+                //return new Manager;
+                let Manager = (responses.managerName, responses.managerIdNumber, responses.managerEmail, responses.office);
+                newTeam.push(Manager);
+                //newTeam.push(new Manager(responses.managerName, responses.managerIdNumber, responses.managerEmail, responses.office));
 
             }
+
         });
 };
 
-newEmployee();
 
 const newTeam = [];
+
 //ASK ARM:
 //newEmployee function does not go through all prompts
 //init function:  does this look okay?
@@ -148,35 +158,35 @@ function writeToFile(fileName, data) {
 }
 
 // Create a function to initialize app
-function init() {
+/*function init() {
     newEmployee((responses) => {
         writeToFile('NewIndex.html', generateFile({ ...responses }))
     })
 }
 
+function init() {
+    newEmployee((responses) => {
+        writeToFile('NewIndex.html', generateFile({ newTeam }))
+    })
+}*/
+
+function init() {
+    newEmployee((responses) => {
+        writeToFile('NewIndex.html', generateFile({ ...responses }))
+    }
+    )
+};
+
 //Call it to initialize app
-//init();
+init();
 
 
 /*function init() {
-    newTeam.push(newEmployee -- how do I put them all here? ).then((newTeam) => {
+    newTeam.push(newEmployee).then((newTeam) => {
         writeToFile('NewIndex.html', generateFile({ ...responses }))
     }
 }
 
 */
 
-/*function newEngineer() {
-    inquirer
-        .prompt(engineerQuestions)
-        .then((responses) => {
-            return new Engineer();
-        })
-};
 
-function newIntern() {
-    inquirer.prompt(internQuestions)
-        .then((responses) => {
-            return new Intern();
-        })
-};*/
