@@ -132,10 +132,13 @@ function newIntern() {
 const newTeam = [];
 
 //ASK ARM:
+//general flow employee-manager-intern-engineer??
 //push to empty array
 //repeat the questions for more employees
 //exit when "finish..." selected
 //init function
+//connecting everything together
+//adding it to specific components on html page
 
 // Create a function to write HTML file
 function writeToFile(fileName, data) {
