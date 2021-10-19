@@ -125,7 +125,7 @@ const internQuestions = [
 ];
 
 //empty array to push new employees when added
-const newTeam = [];
+//const newTeam = [];
 const newManager = [];
 const newIntern = [];
 const newEngineer = [];
