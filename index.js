@@ -1,7 +1,6 @@
 const inquirer = require('inquirer');
 const path = require('path');
 const fs = require('fs');
-//const generateFile = require('./utils/generateFile');
 const Employee = require('./lib/Employee');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
@@ -125,7 +124,7 @@ const internQuestions = [
 ];
 
 //empty array to push new employees when added
-//const newTeam = [];
+const newTeam = [];
 const newManager = [];
 const newIntern = [];
 const newEngineer = [];
@@ -174,7 +173,7 @@ function addTeam() {
 
 
 function init() {
-    fs.writeFile('NewIndex.html', generateFile(), (err) =>
+    fs.writeFile('NewIndex.html', generateTeam(newTeam), (err) =>
         err ? console.error(err) : console.log('You have successfully created a team roster!')
     );
 }
@@ -183,31 +182,115 @@ function init() {
 addTeam();
 
 
-function generateTeam() {
-    newEngineer.forEach(responses => {
-        generateEngineer(responses);
-    });
-    newIntern.forEach(responses => {
-        generateIntern(responses);
-    });
-    newManager.forEach(responses => {
-        generateManager(responses);
-    });
-    /*if (newEngineer !== []) {
-        generateEngineer();
-    }
-    if (newIntern !== []) {
-        generateIntern();
-    }
-    if (newManager !== []) {
-        generateManager();
-    }*/
-};
+
+
+// create the team
+const generateTeam = newTeam => {
+
+    // create the manager html
+    const generateManager = newManager => {
+        return `
+        <div class="card employee-card">
+        <div class="card-header">
+            <h2 class="card-title">${newManager.getName()}</h2>
+            <h3 class="card-title"><i class="fas fa-mug-hot mr-2"></i>${newManager.getRole()}</h3>
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+                <li class="list-group-item">ID: ${newManager.getId()}</li>
+                <li class="list-group-item">Email: <a href="mailto:${newManager.getEmail()}">${newManager.getEmail()}</a></li>
+                <li class="list-group-item">Office number: ${newManager.getOfficeNumber()}</li>
+            </ul>
+        </div>
+    </div>
+        `;
+    };
+
+    // create the engineer html
+    const generateEngineer = newEngineer => {
+        return `
+        <div class="card employee-card">
+        <div class="card-header">
+            <h2 class="card-title">${newEngineer.getName()}</h2>
+            <h3 class="card-title"><i class="fas fa-mug-hot mr-2"></i>${newEngineer.getRole()}</h3>
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+                <li class="list-group-item">ID: ${newEngineer.getId()}</li>
+                <li class="list-group-item">Email: <a href="mailto:${newEngineer.getEmail()}">${newEngineer.getEmail()}</a></li>
+                <li class="list-group-item"> Github: <a href="https://github.com/${newEngineer.getGithub()}" target="_blank">${newEngineer.getGithub()}</a></li> 
+            </ul>
+        </div>
+    </div>
+        `;
+    };
+
+    // create the intern html
+    const generateIntern = newIntern => {
+        return `
+        <div class="card employee-card">
+        <div class="card-header">
+            <h2 class="card-title">${newIntern.getName()}</h2>
+            <h3 class="card-title"><i class="fas fa-mug-hot mr-2"></i>${newIntern.getRole()}</h3>
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+                <li class="list-group-item">ID: ${newIntern.getId()}</li>
+                <li class="list-group-item">Email: <a href="mailto:${newIntern.getEmail()}">${newIntern.getEmail()}</a></li>
+                <li class="list-group-item"> School: ${newIntern.getSchool()}</li> 
+            </ul>
+        </div>
+    </div>
+        `;
+    };
+
+    const html = [];
+
+    html.push(newTeam
+        .filter(employee => employee.getRole() === "Manager")
+        .map(newManager => generateManager(newManager))
+    );
+
+    html.push(newTeam
+        .filter(employee => employee.getRole() === "Engineer")
+        .map(newEngineer => generateEngineer(newEngineer))
+    );
+
+    html.push(newTeam
+        .filter(employee => employee.getRole() === "Intern")
+        .map(newIntern => generateIntern(newIntern))
+    );
+
+
+    return html.join("");
+
+}
+
+/*  function generateTeam() {
+     newEngineer.forEach(responses => {
+       generateEngineer(responses);
+   });
+   newIntern.forEach(responses => {
+       generateIntern(responses);
+   });
+   newManager.forEach(responses => {
+       generateManager(responses);
+   });
+   /*if (newEngineer !== []) {
+       generateEngineer();
+   }
+   if (newIntern !== []) {
+       generateIntern();
+   }
+   if (newManager !== []) {
+       generateManager();
+   }*/
+/*};
 
 function generateManager(responses) {
 
     return `
-    
+
         <div class="card"
         style="width: 18rem; border: darkblue solid 2px; display: flex; display: inline-flex; padding: 10px;">
             <div class="card-body">
@@ -225,7 +308,7 @@ function generateManager(responses) {
 function generateEngineer(responses) {
 
     return `
-    
+
         <div class="card"
         style="width: 18rem; border: darkblue solid 2px; display: flex; display: inline-flex; padding: 10px;">
             <div class="card-body">
@@ -234,7 +317,7 @@ function generateEngineer(responses) {
                 <p class="row">ID: ${responses.engineerIdNumber}</p>
                 <p class="row">Email:
                 <a href="mailto:${responses.engineerEmail}">${responses.engineerEmail}</a></p>
-                <p> Github: <a href="https://github.com/${responses.username}" target="_blank">${responses.username}</a></p> 
+                <p> Github: <a href="https://github.com/${responses.username}" target="_blank">${responses.username}</a></p>
             </div>
         </div>
     `
@@ -243,7 +326,7 @@ function generateEngineer(responses) {
 function generateIntern(responses) {
 
     return `
-    
+
         <div class="card"
         style="width: 18rem; border: darkblue solid 2px; display: flex; display: inline-flex; padding: 10px;">
             <div class="card-body">
@@ -256,9 +339,9 @@ function generateIntern(responses) {
             </div>
         </div>
     `
-};
+}; * /
 
-function generateFile() {
+function generateFile(responses) {
     return `
 
     <!DOCTYPE html>
@@ -275,10 +358,14 @@ function generateFile() {
         <h1>My Team</h1>
     </header>
 
-    ` +
-        generateTeam();
+    <body>
+    ${generateTeam(responses)};
+    </body>
+    </html>
+    `
+
 };
 
-//generateFile();
+//generateFile(); */
 
 
