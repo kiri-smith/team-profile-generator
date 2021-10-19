@@ -5,7 +5,7 @@ const Employee = require('./lib/Employee');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Manager = require('./lib/Manager');
-const generateTeam = require('./lib/generateHTML');
+const generateHTML = require('./lib/generateHTML');
 
 //ask to add new employee
 const newEmployee = [
@@ -173,7 +173,7 @@ function addTeam() {
 
 
 function init() {
-    fs.writeFile('NewIndex.html', generateTeam(newTeam), (err) =>
+    fs.writeFile('NewIndex.html', generateHTML(newTeam), (err) =>
         err ? console.error(err) : console.log('You have successfully created a team roster!')
     );
 }
