@@ -1,7 +1,7 @@
 const inquirer = require('inquirer');
 const path = require('path');
 const fs = require('fs');
-const Employee = require('./lib/Employee');
+//const Employee = require('./lib/Employee');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Manager = require('./lib/Manager');
@@ -140,13 +140,15 @@ function addTeam() {
             if (responses.addEmployee === 'yes') {
                 inquirer.prompt(managerQuestions)
                     .then((responses) => {
-                        newManager.push(responses);
+                        const addedManager = new Manager(responses.name, responses.id, responses.email, responses.officeNumber);
+                        newManager.push(addedManager);
 
                         //if they choose to add engineer, prompt engineer questions
                         if (responses.role === 'Engineer') {
                             return inquirer.prompt(engineerQuestions)
                                 .then((responses) => {
-                                    newEngineer.push(responses);
+                                    const addedEngineer = new Engineer(responses.name, responses.id, responses.email, responses.username);
+                                    newEngineer.push(addedEngineer);
                                     return addTeam();
                                 });
 
@@ -154,13 +156,14 @@ function addTeam() {
                         } else if (responses.role === 'Intern') {
                             return inquirer.prompt(internQuestions)
                                 .then((responses) => {
-                                    newIntern.push(responses);
+                                    const addedIntern = new Intern(responses.name, responses.id, responses.email, responses.school);
+                                    newIntern.push(addedIntern);
                                     return addTeam();
                                 });
 
                             //if they choose to finish, return back to beginning and ask if they want to add another
                         } else {
-                            console.log("Thanks for your input!")
+                            console.log("Thanks for your input!");
                             return addTeam();
                         }
                     });
