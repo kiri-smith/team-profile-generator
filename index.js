@@ -8,7 +8,7 @@ const Intern = require('./lib/Intern');
 const Manager = require('./lib/Manager');
 
 
-// obtain user input
+//ask to add new employee
 const newEmployee = [
     {
         type: 'list',
@@ -19,6 +19,7 @@ const newEmployee = [
     },
 ]
 
+//initial prompts to gather manager information
 const managerQuestions = [
 
     {
@@ -59,6 +60,7 @@ const managerQuestions = [
     },
 ];
 
+//prompts to gather information about engineers
 const engineerQuestions = [
 
     {
@@ -90,6 +92,7 @@ const engineerQuestions = [
     },
 ];
 
+//prompts to gather information about interns
 const internQuestions = [
 
     {
@@ -121,54 +124,50 @@ const internQuestions = [
     },
 ];
 
+//empty array to push new employees when added
 const newTeam = [];
 
+//function to create team
 function addTeam() {
+
+    //prompt user if they want to add an employee to the roster
     inquirer.prompt(newEmployee)
         .then((responses) => {
+
+            //if they answer yes, prompt manager questions
             if (responses.addEmployee === 'yes') {
                 inquirer.prompt(managerQuestions)
                     .then((responses) => {
-                        //console.log(responses);
                         newTeam.push(responses);
+
+                        //if they choose to add engineer, prompt engineer questions
                         if (responses.role === 'Engineer') {
                             return inquirer.prompt(engineerQuestions)
                                 .then((responses) => {
                                     newTeam.push(responses);
                                     return addTeam();
                                 });
-                            /*.then((responses) => {
-                                let employee = new Engineer(responses.engineerName, responses.engineerIdNumber, responses.engineerEmail, responses.username);
-                                newTeam.push(employee);
-                                //init();
-                            });*/
+
+                            //if they choose to add intern, prompt engineer questions
                         } else if (responses.role === 'Intern') {
                             return inquirer.prompt(internQuestions)
                                 .then((responses) => {
                                     newTeam.push(responses);
                                     return addTeam();
                                 });
-                            /*.then((responses) => {
-                                let employee = new Intern(responses.internName, responses.internIdNumber, responses.internEmail, responses.school);
-                                newTeam.push(employee);
-                                //init();
-                            });*/
+
+                            //if they choose to finish, return back to beginning and ask if they want to add another
                         } else {
                             console.log("Thanks for your input!")
                             return addTeam();
-                            /*let employee = new Manager(responses.managerName, responses.managerIdNumber, responses.managerEmail, responses.office);
-                            newTeam.push(employee);*/
-                            // init();
                         }
                     });
+                //if they choose "no" to adding a new employee, exit prompts
             } else {
                 return;
             };
         });
-    init();
 };
-
-
 
 // Create a function to write HTML file
 function writeToFile(fileName, data) {
@@ -188,23 +187,10 @@ function init() {
     })
 }*/
 
-/*function init() {
-    newEmployee((responses) => {
-        writeToFile('NewIndex.html', generateFile(newTeam))
-    }
-    )
-};*/
 
 //Call it to initialize app
-//init();
+init();
 
 
-/*function init() {
-    newTeam.push(newEmployee).then((newTeam) => {
-        writeToFile('NewIndex.html', generateFile({ ...responses }))
-    }
-}
-
-*/
 
 
