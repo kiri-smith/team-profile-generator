@@ -8,7 +8,8 @@ To use this Team Profile Generator, the user will clone this github repository t
 ## Snapshot
 
 What the user enters:
-<img src="..." alt="Screenshot of User Input">
+<img src="assets\Snip1.JPG" alt="Screenshot of User Input">
+<img src="assets\Snip2.JPG" alt="Screenshot of User Input">
 
 What is generated based on their input:
 <img src="..." alt="Screenshot of NewIndex.html based on user input">
