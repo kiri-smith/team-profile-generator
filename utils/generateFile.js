@@ -1,5 +1,4 @@
-
-function generateFile(data) {
+/*function createBase() {
     return `
 
     <!DOCTYPE html>
@@ -16,133 +15,79 @@ function generateFile(data) {
         <h1>My Team</h1>
     </header>
 
-    `;
-
+    `
 };
 
-function generateContent(data) {
-    if (data.engineerName === true) {
-        return `
-        <div class="card"
-        style="width: 18rem; border: darkblue solid 2px; display: flex; display: inline-flex; padding: 10px;">
-            <div class="card-body">
-                <h2 class="card-title">${data.managerName}</h2>
-                <h3 class="card-subtitle mb-2 text-muted">Manager</h3>
-                <p class="row">ID: ${data.managerIdNumber}</p>
-                <p class="row">Email: ${data.managerEmail}</p>
-                <p class="row">Office Number: ${data.office}</p>
-            </div>
-        </div>
-
-        <div class="card"
-        style="width: 18rem; border: darkblue solid 2px; display: flex; display: inline-flex; padding: 10px;">
-            <div class="card-body">
-                <h2 class="card-title">${data.engineerName}</h2>
-                <h3 class="card-subtitle mb-2 text-muted">Engineer</h3>
-                <p class="row">ID: ${data.engineerIdNumber}</p>
-                <p class="row">Email: ${data.engineerEmail}</p>
-                <p class="row">Office Number: ${data.username}</p>
-            </div>
-        </div>
-        `;
+function generateTeam(responses) {
+    if (responses.role === "Engineer") {
+        generateEngineer(responses);
     }
+
+    if (responses.role === "Intern") {
+        generateIntern(responses);
+    }
+
+    if (responses.role === "Finish Building My Team") {
+        generateManager(responses);
+    }
+
 };
 
-if (data.internName === true) {
-
-    return `
-    <div class="card"
-        style="width: 18rem; border: darkblue solid 2px; display: flex; display: inline-flex; padding: 10px;">
-            <div class="card-body">
-                <h2 class="card-title">${data.managerName}</h2>
-                <h3 class="card-subtitle mb-2 text-muted">Manager</h3>
-                <p class="row">ID: ${data.managerIdNumber}</p>
-                <p class="row">Email: ${data.managerEmail}</p>
-                <p class="row">Office Number: ${data.office}</p>
-            </div>
-        </div>
-
-    <div class="card"
-        style="width: 18rem; border: darkblue solid 2px; display: flex; display: inline-flex; padding: 10px;">
-            <div class="card-body">
-                <h2 class="card-title">${data.internName}</h2>
-                <h3 class="card-subtitle mb-2 text-muted">Intern</h3>
-                <p class="row">ID: ${data.internIdNumber}</p>
-                <p class="row">Email: ${data.internEmail}</p>
-                <p class="row">Office Number: ${data.school}</p>
-            </div>
-        </div> `
-
-} else {
+function generateManager(responses) {
 
     return `
 
-    <div class="card"
+        <div class="card"
         style="width: 18rem; border: darkblue solid 2px; display: flex; display: inline-flex; padding: 10px;">
             <div class="card-body">
-                <h2 class="card-title">${data.managerName}</h2>
+                <h2 class="card-title">${responses.managerName}</h2>
                 <h3 class="card-subtitle mb-2 text-muted">Manager</h3>
-                <p class="row">ID: ${data.managerIdNumber}</p>
-                <p class="row">Email: ${data.managerEmail}</p>
-                <p class="row">Office Number: ${data.office}</p>
+                <p class="row">ID: ${responses.managerIdNumber}</p>
+                <p class="row">Email: ${responses.managerEmail}</p>
+                <p class="row">Office Number: ${responses.office}</p>
             </div>
         </div>
     `
 };
 
-generateFile();
-generateContent();
-
-module.exports = generateFile;
-
-
-/*function generateManager(data) {
+function generateEngineer(responses) {
 
     return `
 
-    <div class="card"
-    style="width: 18rem; border: darkblue solid 2px; display: flex; display: inline-flex; padding: 10px;">
-        <div class="card-body">
-            <h2 class="card-title">${data.managerName}</h2>
-            <h3 class="card-subtitle mb-2 text-muted">Manager</h3>
-            <p class="row">ID: ${data.managerIdNumber}</p>
-            <p class="row">Email: ${data.managerEmail}</p>
-            <p class="row">Office Number: ${data.office}</p>
+        <div class="card"
+        style="width: 18rem; border: darkblue solid 2px; display: flex; display: inline-flex; padding: 10px;">
+            <div class="card-body">
+                <h2 class="card-title">${responses.engineerName}</h2>
+                <h3 class="card-subtitle mb-2 text-muted">Engineer</h3>
+                <p class="row">ID: ${responses.engineerIdNumber}</p>
+                <p class="row">Email: ${responses.engineerEmail}</p>
+                <p class="row">Office Number: ${responses.username}</p>
+            </div>
         </div>
-    </div>
-`
+    `
 };
 
-function generateEngineer(data) {
+function generateIntern(responses) {
 
     return `
 
-    <div class="card"
-    style="width: 18rem; border: darkblue solid 2px; display: flex; display: inline-flex; padding: 10px;">
-        <div class="card-body">
-            <h2 class="card-title">${data.engineerName}</h2>
-            <h3 class="card-subtitle mb-2 text-muted">Engineer</h3>
-            <p class="row">ID: ${data.engineerIdNumber}</p>
-            <p class="row">Email: ${data.engineerEmail}</p>
-            <p class="row">Office Number: ${data.username}</p>
+        <div class="card"
+        style="width: 18rem; border: darkblue solid 2px; display: flex; display: inline-flex; padding: 10px;">
+            <div class="card-body">
+                <h2 class="card-title">${responses.internName}</h2>
+                <h3 class="card-subtitle mb-2 text-muted">Intern</h3>
+                <p class="row">ID: ${responses.internIdNumber}</p>
+                <p class="row">Email: ${responses.internEmail}</p>
+                <p class="row">Office Number: ${responses.school}</p>
+            </div>
         </div>
-    </div>
-`
+    `
 };
 
-function generateIntern(data) {
+function generateFile() {
+    createBase();
+    generateTeam();
+};
 
-    return `
+generateFile();*/
 
-    <div class="card"
-    style="width: 18rem; border: darkblue solid 2px; display: flex; display: inline-flex; padding: 10px;">
-        <div class="card-body">
-            <h2 class="card-title">${data.internName}</h2>
-            <h3 class="card-subtitle mb-2 text-muted">Intern</h3>
-            <p class="row">ID: ${data.internIdNumber}</p>
-            <p class="row">Email: ${data.internEmail}</p>
-            <p class="row">Office Number: ${data.school}</p>
-        </div>
-    </div>
-`
-}; */
