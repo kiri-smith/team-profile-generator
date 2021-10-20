@@ -124,7 +124,6 @@ const internQuestions = [
 ];
 
 //empty array to push new employees when added
-const newTeam = [];
 const newManager = [];
 const newIntern = [];
 const newEngineer = [];
@@ -176,7 +175,7 @@ function addTeam() {
 
 
 function init() {
-    fs.writeFile('NewIndex.html', generateHTML(newTeam), (err) =>
+    fs.writeFile('NewIndex.html', generateHTML(newManager, newEngineer, newIntern), (err) =>
         err ? console.error(err) : console.log('You have successfully created a team roster!')
     );
 }
