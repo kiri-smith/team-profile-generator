@@ -8,15 +8,15 @@ To use this Team Profile Generator, the user will clone this github repository t
 ## Snapshot
 
 What the user enters:
-<img src="assets\Snip1.JPG" alt="Screenshot of User Input">
-<img src="assets\Snip2.JPG" alt="Screenshot of User Input">
+<img src="assets\Snip3.JPG" alt="Screenshot of User Input">
 
 What is generated based on their input:
-<img src="..." alt="Screenshot of NewIndex.html based on user input">
+<img src="assets\Snip4.JPG" alt="Snippet of html file">
+<img src="assets\Snip5.JPG" alt="Screenshot of NewIndex.html based on user input">
 
 ## Demo Video
 
-<href src="...">
+<href src="https://watch.screencastify.com/v/PRNTtBrzbZbeT9GIMfoW">
 
 ## Built With
 

@@ -27,7 +27,7 @@ describe("Intern class", () => {
 
         it("should set 'school' when created", () => {
             // Arrange
-            const username = "Nazareth";
+            const school = "Nazareth";
             // Act
             const obj = new Intern(school);
             // Assert
