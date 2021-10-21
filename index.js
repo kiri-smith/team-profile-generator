@@ -5,7 +5,6 @@ const fs = require('fs');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Manager = require('./lib/Manager');
-const generateHTML = require('./lib/generateHTML');
 
 //ask to add new employee
 const newEmployee = [
@@ -14,6 +13,18 @@ const newEmployee = [
         message: "Do you want to add an employee?",
         name: 'addEmployee',
         choices: ['yes', 'no'],
+        validate: (value) => { if (value) { return true } else { return 'Must choose a value to continue.' } }
+    },
+
+]
+
+const whichEmployee = [
+    {
+
+        type: 'list',
+        message: "Do you want to add an employee? Select type or select 'Finish' to exit.",
+        name: 'role',
+        choices: ['Manager', 'Engineer', 'Intern', 'Finish Building My Team'],
         validate: (value) => { if (value) { return true } else { return 'Must choose a value to continue.' } }
     },
 ]
@@ -49,14 +60,6 @@ const managerQuestions = [
         validate: (value) => { if (value) { return true } else { return 'Must input office number to continue.' } }
     },
 
-    {
-
-        type: 'list',
-        message: "Select the employee type you would like to add or select 'Finish Building My Team' to exit.",
-        name: 'role',
-        choices: ['Engineer', 'Intern', 'Finish Building My Team'],
-        validate: (value) => { if (value) { return true } else { return 'Must choose a value to continue.' } }
-    },
 ];
 
 //prompts to gather information about engineers
@@ -132,50 +135,48 @@ const newEngineer = [];
 function addTeam() {
 
     //prompt user if they want to add an employee to the roster
-    inquirer.prompt(newEmployee)
+    inquirer.prompt(whichEmployee)
         .then((responses) => {
 
             //if they answer yes, prompt manager questions
-            if (responses.addEmployee === 'yes') {
+            if (responses.role === 'Manager') {
                 inquirer.prompt(managerQuestions)
                     .then((responses) => {
-                        const addedManager = new Manager(responses.name, responses.id, responses.email, responses.officeNumber);
+                        const addedManager = new Manager(responses.managerName, responses.managerIdNumber, responses.managerEmail, responses.office);
                         newManager.push(addedManager);
+                        addTeam();
+                    })
 
-                        //if they choose to add engineer, prompt engineer questions
-                        if (responses.role === 'Engineer') {
-                            return inquirer.prompt(engineerQuestions)
-                                .then((responses) => {
-                                    const addedEngineer = new Engineer(responses.name, responses.id, responses.email, responses.username);
-                                    newEngineer.push(addedEngineer);
-                                    return addTeam();
-                                });
 
-                            //if they choose to add intern, prompt engineer questions
-                        } else if (responses.role === 'Intern') {
-                            return inquirer.prompt(internQuestions)
-                                .then((responses) => {
-                                    const addedIntern = new Intern(responses.name, responses.id, responses.email, responses.school);
-                                    newIntern.push(addedIntern);
-                                    return addTeam();
-                                });
-
-                            //if they choose to finish, return back to beginning and ask if they want to add another
-                        } else {
-                            console.log("Thanks for your input!");
-                            return addTeam();
-                        }
+                //if they choose to add engineer, prompt engineer questions
+            } else if (responses.role === 'Engineer') {
+                inquirer.prompt(engineerQuestions)
+                    .then((responses) => {
+                        const addedEngineer = new Engineer(responses.engineerName, responses.engineerIdNumber, responses.engineerEmail, responses.username);
+                        newEngineer.push(addedEngineer);
+                        addTeam();
                     });
-                //if they choose "no" to adding a new employee, exit prompts
+
+                //if they choose to add intern, prompt engineer questions
+            } else if (responses.role === 'Intern') {
+                inquirer.prompt(internQuestions)
+                    .then((responses) => {
+                        const addedIntern = new Intern(responses.internName, responses.internIdNumber, responses.internEmail, responses.school);
+                        newIntern.push(addedIntern);
+                        addTeam();
+                    });
+
+                //if they choose to finish, return back to beginning and ask if they want to add another
             } else {
-                init();
-            };
+                console.log("Thanks for your input!");
+                return init();
+            }
         });
 };
 
 
 function init() {
-    fs.writeFile('NewIndex.html', generateHTML(newManager, newEngineer, newIntern), (err) =>
+    fs.writeFile('NewIndex.html', generateHTML(), (err) =>
         err ? console.error(err) : console.log('You have successfully created a team roster!')
     );
 }
@@ -185,4 +186,35 @@ addTeam();
 
 
 
+
+const generateHTML = () => {
+
+    let template = ``
+    const team = [...newManager, ...newEngineer, ...newIntern];
+    team.forEach(employee => template += employee.generateEmployee())
+
+    return `
+    
+    <!DOCTYPE html>
+    <html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Profile Generator</title>
+</head>
+
+<header class="header" style="text-align: center; background-color: darkblue; color: white;">
+    <h1>My Team</h1>
+</header>
+
+<body>
+    
+${template}
+    
+</body>
+</html>
+`
+}
 
