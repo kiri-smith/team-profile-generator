@@ -186,7 +186,7 @@ addTeam();
 
 
 
-
+//Generate HTML using the input from the user
 const generateHTML = () => {
 
     let template = ``
